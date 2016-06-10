@@ -1,4 +1,8 @@
-﻿var homeController = {
+﻿var homeconfig = {
+    pageSize: 3,
+    pageIndex: 1,
+}
+var homeController = {
     init: function () {
         homeController.loadData();
         homeController.registerEvent();
@@ -37,6 +41,10 @@
         $.ajax({
             url: '/Home/LoadData',
             type: 'GET',
+            data: {
+                page: homeconfig.pageIndex,
+                pageSize: homeconfig.pageSize
+            },
             dataType: 'json',
             success: function (response) {
                 if (response.status) {
@@ -53,10 +61,28 @@
 
                     });
                     $('#tblData').html(html);
+                    homeController.paging(response.total, function () {
+                        homeController.loadData();
+                    });
                     homeController.registerEvent();
                 }
             }
         })
+    },
+    paging: function (totalRow, callback) {
+        var totalPage = Math.ceil(totalRow / homeconfig.pageSize);
+        $('#pagination').twbsPagination({
+            totalPages: totalPage,
+            first: "Đầu",
+            next: "Tiếp",
+            last: "Cuối",
+            prev:"Trước",
+            visiblePages: 10,
+            onPageClick: function (event, page) {
+                homeconfig.pageIndex = page;
+                setTimeout(callback, 200);
+            }
+        });
     }
 }
 homeController.init();

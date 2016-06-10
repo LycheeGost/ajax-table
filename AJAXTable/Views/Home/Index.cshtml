@@ -4,7 +4,9 @@
 @section scripts{
 
   <script src="~/Scripts/plugins/mustache.min.js"></script>
+<script src="~/Scripts/plugins/jquery.twbsPagination.min.js"></script>
   <script src="~/Scripts/controllers/homeController.js"></script>
+
 }
 <div class="row">
   <table class="table">
@@ -18,6 +20,8 @@
     </thead>
     <tbody id="tblData"></tbody>
   </table>
+  <div id="pagination" class="pagination">
+  </div>
 
   <script id="data-template" type="x-tmpl-mustache">
     <tr>
