@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AJAXTable", "AJAXTable\AJAXTable.csproj", "{C9DD133A-024B-4778-82E8-F3017557695E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxTable.Data", "AjaxTable.Data\AjaxTable.Data.csproj", "{1A15BC2B-DBFD-496F-98B5-A3FE0EA337AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C9DD133A-024B-4778-82E8-F3017557695E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9DD133A-024B-4778-82E8-F3017557695E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9DD133A-024B-4778-82E8-F3017557695E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A15BC2B-DBFD-496F-98B5-A3FE0EA337AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A15BC2B-DBFD-496F-98B5-A3FE0EA337AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A15BC2B-DBFD-496F-98B5-A3FE0EA337AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A15BC2B-DBFD-496F-98B5-A3FE0EA337AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
