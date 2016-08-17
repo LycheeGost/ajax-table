@@ -1,5 +1,5 @@
 ﻿var homeconfig = {
-    pageSize: 3,
+    pageSize: 20,
     pageIndex: 1,
 }
 var homeController = {
@@ -16,6 +16,54 @@ var homeController = {
                 homeController.updateSalary(id, value);
             }
         });
+
+        $('#btnAddNew').off('click').on('click', function () {
+            $('#modalAddUpdate').modal('show');
+            homeController.resetForm();
+        });
+
+        $('#btnSave').off('click').on('click', function () {
+            homeController.saveData();
+        });
+    },
+    saveData: function () {
+        var name = $('#txtName').val();
+        var salary = parseFloat($('#txtSalary').val());
+        var status = $('#ckStatus').prop('checked');
+        var id = parseInt($('#hidID').val());
+        var employee = {
+            Name: name,
+            Salary: salary,
+            Status: status,
+            ID: id
+        }
+        $.ajax({
+            url: '/Home/SaveData',
+            data: {
+                strEmployee: JSON.stringify(employee)
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (status == true) {
+                    alert('Save success');
+                    $('#modalAddUpdate').modal('hide');
+                    homeController.loadData();
+                }
+                else {
+                    alert(response.Message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    },
+    resetForm: function () {
+        $('#hidID').val('0');
+        $('#txtName').val('');
+        $('txtSalary').val(0);
+        $('#ckStatus').prop('checked', true);
     },
     updateSalary: function (id, value) {
         var data = {
@@ -76,7 +124,7 @@ var homeController = {
             first: "Đầu",
             next: "Tiếp",
             last: "Cuối",
-            prev:"Trước",
+            prev: "Trước",
             visiblePages: 10,
             onPageClick: function (event, page) {
                 homeconfig.pageIndex = page;
