@@ -36,6 +36,17 @@ namespace AJAXTable.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetDetail(int id)
+        {
+            var employee = _context.Employees.Find(id);
+            return Json(new
+            {
+                data = employee,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult SaveData(string strEmployee)
         {
@@ -67,7 +78,7 @@ namespace AJAXTable.Controllers
                 entity.Salary = employee.Salary;
                 entity.Name = employee.Name;
                 entity.Status = employee.Status;
-                
+
                 try
                 {
                     _context.SaveChanges();
@@ -102,6 +113,30 @@ namespace AJAXTable.Controllers
             {
                 status = true
             });
+        }
+
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            var entity = _context.Employees.Find(id);
+            _context.Employees.Remove(entity);
+            try
+            {
+                _context.SaveChanges();
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    status = false,
+                    message = ex.Message
+                });
+            }
+
         }
     }
 }

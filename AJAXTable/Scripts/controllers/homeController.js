@@ -25,6 +25,68 @@ var homeController = {
         $('#btnSave').off('click').on('click', function () {
             homeController.saveData();
         });
+
+        $('.btn-edit').off('click').on('click', function () {
+            $('#modalAddUpdate').modal('show');
+            var id = $(this).data('id');
+            homeController.loadDetail(id);
+        });
+
+        $('.btn-delete').off('click').on('click', function () {
+            var id = $(this).data('id');
+            bootbox.confirm("Are you sure to delete this employee?", function (result) {
+                homeController.deleteEmployee(id);
+            });
+        });
+
+    },
+    deleteEmployee: function (id) {
+        $.ajax({
+            url: '/Home/Delete',
+            data: {
+                id: id
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == true) {
+                    bootbox.alert("Delete Success", function () {
+                        homeController.loadData();
+                    });
+                }
+                else {
+                    bootbox.alert(response.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    },
+    loadDetail: function (id) {
+        $.ajax({
+            url: '/Home/GetDetail',
+            data: {
+                id: id
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == true) {
+                    var data = response.data;
+                    $('#hidID').val(data.ID);
+                    $('#txtName').val(data.Name);
+                    $('#txtSalary').val(data.Salary);
+                    $('#ckStatus').prop('checked', data.Status);
+                }
+                else {
+                    bootbox.alert(response.message);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
     },
     saveData: function () {
         var name = $('#txtName').val();
@@ -45,19 +107,21 @@ var homeController = {
             type: 'POST',
             dataType: 'json',
             success: function (response) {
-                if (status == true) {
-                    alert('Save success');
-                    $('#modalAddUpdate').modal('hide');
-                    homeController.loadData();
+                if (response.status == true) {
+                    bootbox.alert("Save Success", function () {
+                        $('#modalAddUpdate').modal('hide');
+                        homeController.loadData();
+                    });
+
                 }
                 else {
-                    alert(response.Message);
+                    bootbox.alert(response.message);
                 }
             },
             error: function (err) {
                 console.log(err);
             }
-        })
+        });
     },
     resetForm: function () {
         $('#hidID').val('0');
@@ -77,10 +141,10 @@ var homeController = {
             data: { model: JSON.stringify(data) },
             success: function (response) {
                 if (response.status) {
-                    alert('Update successed.');
+                    bootbox.alert("Update success");
                 }
                 else {
-                    alert('Update failed.');
+                    bootbox.alert(response.message);
                 }
             }
         })
