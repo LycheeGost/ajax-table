@@ -8,6 +8,30 @@ var homeController = {
         homeController.registerEvent();
     },
     registerEvent: function () {
+        $('#frmSaveData').validate({
+            rules: {
+                txtName: {
+                    required: true,
+                    minlength: 5
+                },
+                txtSalary: {
+                    required: true,
+                    number: true,
+                    min: 0
+                }
+            },
+            messages: {
+                txtName: {
+                    required: "Bạn phải nhập tên",
+                    minlength: "Tên phải lớn hơn 5 ký tự"
+                },
+                txtSalary: {
+                    required: "Bạn phải nhập lương",
+                    number: "Lương phải là số",
+                    min:"Lương của bạn phải lớn hơn hoặc bằng 0"
+                }
+            }
+        });
         $('.txtSalary').off('keypress').on('keypress', function (e) {
             if (e.which == 13) {
                 var id = $(this).data('id');
@@ -29,7 +53,9 @@ var homeController = {
         });
 
         $('#btnSave').off('click').on('click', function () {
-            homeController.saveData();
+            if ($('#frmSaveData').valid()) {
+                homeController.saveData();
+            }
         });
 
         $('#btnSearch').off('click').on('click', function () {
